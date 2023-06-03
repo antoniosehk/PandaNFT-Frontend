@@ -45,11 +45,11 @@ const App = () => {
       <Center h="100vh">
         <Container maxW="xl">
           <Heading size="4xl" mb={10}>
-            Mine your NFT
+            Mint your NFT
           </Heading>
 
           <Text mb={10}>
-            Hey! You can mine your NFT here! You can either mint 1-3 NFTs.
+            Hey! You can mint your NFT here! You can either mint 1-3 NFTs.
             Currently only Sepolia network is supported.
           </Text>
 
