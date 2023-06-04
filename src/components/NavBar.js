@@ -9,6 +9,7 @@ import {
   useColorModeValue,
   Button,
 } from "@chakra-ui/react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -24,7 +25,7 @@ const NavBar = () => {
       </Box>
       <Spacer />
       <ButtonGroup m="2">
-        <Button colorScheme="teal">Connect</Button>
+        <ConnectButton />
         <Button onClick={toggleColorMode}>
           {colorMode === "light" ? <BsMoonStarsFill /> : <BsSun />}
         </Button>
