@@ -47,6 +47,7 @@ const MintButton = () => {
       <Text mb={10}>
         Hey! You can either mint 1 - 3 NFT here. Each NFT costs 0.001 ETH.
       </Text>
+      {contractWrite.isLoading && <Text mb={10}>Check your wallet...</Text>}
       {waitForTransaction.isLoading && <Text mb={10}>Minting NFT...</Text>}
       {waitForTransaction.isSuccess && (
         <Text mb={10}>
