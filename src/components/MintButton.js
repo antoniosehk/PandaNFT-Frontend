@@ -79,7 +79,7 @@ const MintButton = () => {
 
       <Center>
         <Button
-          isDisabled={waitForTransaction.isLoading || !contractWrite.writeAsync}
+          isDisabled={waitForTransaction.isLoading}
           colorScheme="teal"
           size="lg"
           onClick={handleSendTransaction}
