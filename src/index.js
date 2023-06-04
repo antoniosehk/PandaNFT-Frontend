@@ -25,6 +25,8 @@ const { chains, publicClient } = configureChains(
   ]
 );
 
+console.log(process.env.REACT_APP_ALCHEMY_ID);
+
 const { connectors } = getDefaultWallets({
   appName: process.env.REACT_APP_WALLET_CONNECT_APP_NAME,
   projectId: process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID,
