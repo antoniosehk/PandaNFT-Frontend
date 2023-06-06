@@ -28,8 +28,6 @@ const MintButton = () => {
     functionName: "MINT_FEE",
   });
 
-  console.log(formatEther(nftPriceOnChain));
-
   useEffect(() => {
     setNFTValue(formatEther(nftPriceOnChain));
   }, [nftPriceOnChain]);
