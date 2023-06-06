@@ -37,7 +37,7 @@ const MintButton = () => {
     abi: abi,
     functionName: "mint",
     args: [mintValue],
-    value: parseEther(String(formatEther(nftPriceOnChain) * mintValue)),
+    value: parseEther(String(nftValue * mintValue)),
   });
 
   const contractWrite = useContractWrite(config);
