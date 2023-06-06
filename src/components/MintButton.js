@@ -19,7 +19,7 @@ import { abi, contractAddress } from "../abi/Mint";
 
 const MintButton = () => {
   const [mintValue, setMintValue] = useState(1);
-  const [nftValue, setNFTValue] = useState(0);
+  const [nftValue, setNFTValue] = useState("");
 
   const { chain } = useNetwork();
   const { data: nftPriceOnChain } = useContractRead({
@@ -30,18 +30,16 @@ const MintButton = () => {
 
   console.log(formatEther(nftPriceOnChain));
 
-  /*
   useEffect(() => {
     setNFTValue(formatEther(nftPriceOnChain));
   }, [nftPriceOnChain]);
-  */
 
   const { config } = usePrepareContractWrite({
     address: contractAddress[chain.network],
     abi: abi,
     functionName: "mint",
     args: [mintValue],
-    value: parseEther(String(0.0012 * mintValue)),
+    value: parseEther(String(nftValue * mintValue)),
   });
 
   const contractWrite = useContractWrite(config);
