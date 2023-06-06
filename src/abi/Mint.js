@@ -388,6 +388,7 @@ const abi = [
 
 const contractAddress = {
   sepolia: "0x60743E1E397F1Ee7720EB1F568a8F616d3128178",
+  goerli: "0x742BDd8AC5FC98647C8FeeEc4A5EE9Ed5e6f86a4",
 };
 
 export { abi, contractAddress };
