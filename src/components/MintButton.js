@@ -80,6 +80,7 @@ const MintButton = () => {
 
       <Center>
         <Button
+          mt={5}
           isDisabled={waitForTransaction.isLoading || !contractWrite.writeAsync}
           colorScheme="teal"
           size="lg"
