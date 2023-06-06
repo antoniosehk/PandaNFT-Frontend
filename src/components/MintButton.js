@@ -28,16 +28,20 @@ const MintButton = () => {
     functionName: "MINT_FEE",
   });
 
+  console.log(formatEther(nftPriceOnChain));
+
+  /*
   useEffect(() => {
     setNFTValue(formatEther(nftPriceOnChain));
   }, [nftPriceOnChain]);
+  */
 
   const { config } = usePrepareContractWrite({
     address: contractAddress[chain.network],
     abi: abi,
     functionName: "mint",
     args: [mintValue],
-    value: parseEther(String(nftValue * mintValue)),
+    value: parseEther(String(0.0012 * mintValue)),
   });
 
   const contractWrite = useContractWrite(config);
