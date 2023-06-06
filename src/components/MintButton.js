@@ -45,7 +45,8 @@ const MintButton = () => {
   return (
     <>
       <Text mt={10} mb={10}>
-        Hey! You can either mint 1 - 3 NFT here. Each NFT costs 0.001 ETH.
+        Hey! You can either mint 1 - 3 Panda NFT here. Each Panda NFT costs
+        0.001 ETH.
       </Text>
       {contractWrite.isLoading && <Text mb={10}>Check your wallet...</Text>}
       {waitForTransaction.isLoading && <Text mb={10}>Minting NFT...</Text>}

@@ -21,7 +21,7 @@ const NavBar = () => {
       bg={useColorModeValue("gray.100", "gray.900")}
     >
       <Box ml="2">
-        <Heading size="md">NFTMint</Heading>
+        <Heading size="md">Pnada NFT</Heading>
       </Box>
       <Spacer />
       <ButtonGroup m="2">
