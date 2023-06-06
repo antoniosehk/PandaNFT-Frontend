@@ -6,26 +6,38 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
+  useContractRead,
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
   useNetwork,
 } from "wagmi";
-import { parseEther } from "viem";
+import { parseEther, formatEther } from "viem";
 import { abi, contractAddress } from "../abi/Mint";
 
 const MintButton = () => {
   const [mintValue, setMintValue] = useState(1);
+  const [nftValue, setNFTValue] = useState(0);
+
   const { chain } = useNetwork();
+  const { data: nftPriceOnChain } = useContractRead({
+    address: contractAddress[chain.network],
+    abi: abi,
+    functionName: "MINT_FEE",
+  });
+
+  useEffect(() => {
+    setNFTValue(formatEther(nftPriceOnChain));
+  }, [nftPriceOnChain]);
 
   const { config } = usePrepareContractWrite({
     address: contractAddress[chain.network],
     abi: abi,
     functionName: "mint",
     args: [mintValue],
-    value: parseEther(String(0.001 * mintValue)),
+    value: parseEther(String(formatEther(nftPriceOnChain) * mintValue)),
   });
 
   const contractWrite = useContractWrite(config);
@@ -45,8 +57,7 @@ const MintButton = () => {
   return (
     <>
       <Text mt={10} mb={10}>
-        Hey! You can either mint 1 - 3 Panda NFT here. Each Panda NFT costs
-        0.001 ETH.
+        {`Hey! You can either mint 1 - 3 Panda NFT here. Each Panda NFT costs ${nftValue} ETH.`}
       </Text>
       {contractWrite.isLoading && <Text mb={10}>Check your wallet...</Text>}
       {waitForTransaction.isLoading && <Text mb={10}>Minting NFT...</Text>}
