@@ -3,12 +3,12 @@ import Main from "./components/Main";
 import { useAccount } from "wagmi";
 
 const App = () => {
-  const { isConnected } = useAccount();
+  const { address, isConnected } = useAccount();
 
   return (
     <>
       <NavBar />
-      <Main isConnected={isConnected} />
+      <Main address={address} isConnected={isConnected} />
     </>
   );
 };

@@ -1,7 +1,9 @@
 import { Box, Center, Text, Heading, Image } from "@chakra-ui/react";
 import MintButton from "./MintButton";
+import { RandomMintButton } from "./RandomMintButton";
+import { ClaimButton } from "./ClaimButton";
 
-const Main = ({ isConnected }) => {
+const Main = ({ address, isConnected }) => {
   return (
     <Center h="100vh" flexDirection="column">
       <Heading size="4xl" mt={10} mb={10}>
@@ -13,7 +15,11 @@ const Main = ({ isConnected }) => {
       </Box>
 
       {isConnected ? (
-        <MintButton />
+        <>
+          <MintButton />
+          <RandomMintButton />
+          <ClaimButton address={address} />
+        </>
       ) : (
         <Text mt={10} mb={10}>
           Connect your wallet first.

@@ -1,4 +1,4 @@
-import { Button, Center, Text, Link } from "@chakra-ui/react";
+import { Button, Text, Link } from "@chakra-ui/react";
 import {
   NumberInput,
   NumberInputField,
@@ -26,10 +26,15 @@ const MintButton = () => {
     address: contractAddress[chain.network],
     abi: abi,
     functionName: "MINT_FEE",
+    watch: true,
   });
 
   useEffect(() => {
-    setNFTValue(formatEther(nftPriceOnChain));
+    try {
+      setNFTValue(formatEther(nftPriceOnChain));
+    } catch (error) {
+      console.log(error);
+    }
   }, [nftPriceOnChain]);
 
   const { config } = usePrepareContractWrite({
@@ -56,13 +61,21 @@ const MintButton = () => {
 
   return (
     <>
-      <Text mt={10} mb={10}>
+      <Text mt={10} mb={2}>
         {`Hey! You can either mint 1 - 3 Panda NFT here. Each Panda NFT costs ${nftValue} ETH.`}
       </Text>
-      {contractWrite.isLoading && <Text mb={10}>Check your wallet...</Text>}
-      {waitForTransaction.isLoading && <Text mb={10}>Minting NFT...</Text>}
+      {contractWrite.isLoading && (
+        <Text mt={2} mb={2}>
+          Check your wallet...
+        </Text>
+      )}
+      {waitForTransaction.isLoading && (
+        <Text mt={2} mb={2}>
+          Minting NFT...
+        </Text>
+      )}
       {waitForTransaction.isSuccess && (
-        <Text mb={10}>
+        <Text mt={2} mb={2}>
           <Link
             href={`${chain?.blockExplorers?.default.url}/tx/${contractWrite.data?.hash}`}
             isExternal
@@ -72,14 +85,17 @@ const MintButton = () => {
         </Text>
       )}
       {(contractWrite.isError || waitForTransaction.isError) && (
-        <Text mb={10}>Something wrong during minting...please try again</Text>
+        <Text mt={2} mb={2}>
+          Something wrong during minting...please try again
+        </Text>
       )}
 
       <NumberInput
         defaultValue={1}
         min={1}
         max={3}
-        mb={5}
+        mt={2}
+        mb={2}
         value={mintValue}
         onChange={(mintValueString) => setMintValue(mintValueString)}
       >
@@ -90,17 +106,16 @@ const MintButton = () => {
         </NumberInputStepper>
       </NumberInput>
 
-      <Center>
-        <Button
-          mt={5}
-          isDisabled={waitForTransaction.isLoading || !contractWrite.writeAsync}
-          colorScheme="teal"
-          size="lg"
-          onClick={handleSendTransaction}
-        >
-          Mint
-        </Button>
-      </Center>
+      <Button
+        mt={2}
+        mb={2}
+        isDisabled={waitForTransaction.isLoading || !contractWrite.writeAsync}
+        colorScheme="teal"
+        size="lg"
+        onClick={handleSendTransaction}
+      >
+        Mint
+      </Button>
 
       <Text fontSize="lg" fontWeight="bold"></Text>
     </>

@@ -1,16 +1,22 @@
 const abi = [
-  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
+  {
+    inputs: [
+      { internalType: "address", name: "_owner", type: "address" },
+      {
+        internalType: "address",
+        name: "_vRFV2ConsumerAddress",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
   { inputs: [], name: "ApprovalCallerNotOwnerNorApproved", type: "error" },
   { inputs: [], name: "ApprovalQueryForNonexistentToken", type: "error" },
   { inputs: [], name: "BalanceQueryForZeroAddress", type: "error" },
   { inputs: [], name: "MintERC2309QuantityExceedsLimit", type: "error" },
   { inputs: [], name: "MintToZeroAddress", type: "error" },
   { inputs: [], name: "MintZeroQuantity", type: "error" },
-  {
-    inputs: [{ internalType: "address", name: "operator", type: "address" }],
-    name: "OperatorNotAllowed",
-    type: "error",
-  },
   { inputs: [], name: "OwnerQueryForNonexistentToken", type: "error" },
   { inputs: [], name: "OwnershipNotInitializedForExtraData", type: "error" },
   { inputs: [], name: "TransferCallerNotOwnerNorApproved", type: "error" },
@@ -160,14 +166,15 @@ const abi = [
   },
   {
     inputs: [],
-    name: "OPERATOR_FILTER_REGISTRY",
-    outputs: [
-      {
-        internalType: "contract IOperatorFilterRegistry",
-        name: "",
-        type: "address",
-      },
-    ],
+    name: "MINT_FEE_RANDOM",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "addressToRequestId",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -189,24 +196,31 @@ const abi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "string", name: "_tokenURI", type: "string" }],
-    name: "changeDefURI",
+    inputs: [],
+    name: "baseTokenURI",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_address", type: "address" }],
+    name: "checkIfRandomMintEligible",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "claim",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "flag", type: "uint256" }],
-    name: "changeTokenURIFlag",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "string", name: "_tokenURI", type: "string" }],
-    name: "changeURI",
-    outputs: [],
-    stateMutability: "nonpayable",
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "claimed",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -263,22 +277,16 @@ const abi = [
   },
   {
     inputs: [],
-    name: "renounceOwnership",
+    name: "randomMint",
     outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "payable",
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "uint256", name: "tokenId", type: "uint256" },
-      { internalType: "uint256", name: "salePrice", type: "uint256" },
-    ],
-    name: "royaltyInfo",
-    outputs: [
-      { internalType: "address", name: "", type: "address" },
-      { internalType: "uint256", name: "", type: "uint256" },
-    ],
-    stateMutability: "view",
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -315,11 +323,18 @@ const abi = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "address", name: "_address", type: "address" }],
+    name: "setVRFV2ConsumerAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address", name: "_address", type: "address" },
       { internalType: "bool", name: "_value", type: "bool" },
     ],
-    name: "setWhiteList",
+    name: "setWhiteListAddress",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -364,13 +379,6 @@ const abi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "_to", type: "address" }],
-    name: "transferOut",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
     name: "transferOwnership",
     outputs: [],
@@ -378,17 +386,33 @@ const abi = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "string", name: "_tokenURI", type: "string" }],
+    name: "updateBaseTokenURI",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "whitelist",
+    name: "whiteListAddress",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_to", type: "address" }],
+    name: "withdrawContractBalance",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
 ];
 
 const contractAddress = {
-  sepolia: "0x60743E1E397F1Ee7720EB1F568a8F616d3128178",
-  goerli: "0x742BDd8AC5FC98647C8FeeEc4A5EE9Ed5e6f86a4",
+  //sepolia: "0x60743E1E397F1Ee7720EB1F568a8F616d3128178",
+  //goerli: "0x742BDd8AC5FC98647C8FeeEc4A5EE9Ed5e6f86a4",
+  sepolia: "0xd8E7F3e2d58c04aC6c648E3176d1603411EAd4d4",
+  goerli: "0x60743E1E397F1Ee7720EB1F568a8F616d3128178",
 };
 
 export { abi, contractAddress };
