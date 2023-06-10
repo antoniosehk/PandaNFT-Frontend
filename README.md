@@ -36,5 +36,4 @@ yarn start
 ```
 
 ## Reference
- - [PandaNFT smart contract](https://github.com/antoniosehk/PandaNFT)
-
+ - [https://github.com/antoniosehk/PandaNFT-ERC721A](https://github.com/antoniosehk/PandaNFT-ERC721A)
